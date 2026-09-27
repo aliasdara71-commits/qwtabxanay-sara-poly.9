@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>قوتابخانەی سارا پۆلی 9ج</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ڕەش و نیلی وەک بنچینە، لەگەڵ زێڕ و شینی تیل وەک ڕازاندنەوە */
+  --bg: #0a0e1a;
+  --surface: #121a2c;
+  --surface-2: #1a2440;
+  --text: #f4f6fb;
+  --text-muted: #9aa6c4;
+  --brass: #d9ae55;
+  --brass-bg: rgba(217, 174, 85, 0.16);
+  --teal: #6fc3d6;
+  --teal-bg: rgba(111, 195, 214, 0.14);
+  --line: rgba(244, 246, 251, 0.10);
+  --open: #6fdb9a;
+  --open-bg: rgba(111, 219, 154, 0.14);
+  --closed: #f0897c;
+  --closed-bg: rgba(240, 137, 124, 0.15);
+  --radius: 12px;
+  --radius-sm: 8px;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--bg);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(900px 500px at 10% -10%, rgba(217, 174, 85, 0.10), transparent 60%),
+    radial-gradient(700px 550px at 100% 15%, rgba(111, 195, 214, 0.10), transparent 55%);
+  color: var(--text);
+  font-family: "Noto Kufi Arabic", "Segoe UI", Tahoma, sans-serif;
+  font-weight: 600;
+}
+
+/* ==== سەرپەڕە ==== */
+.topbar {
+  background: var(--surface);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: calc(20px + env(safe-area-inset-top, 0px)) 20px 18px;
+  border-bottom: 3px solid var(--brass);
+}
+
+.school-mark {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: var(--brass);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 4px rgba(217, 174, 85, 0.18);
+}
+
+.school-name h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.school-name p {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ==== ناوەڕۆک ==== */
+main {
+  flex: 1;
+  padding: 18px 16px 8px;
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--text);
+  border-right: 3px solid var(--brass);
+  padding-right: 10px;
+  margin: 0 0 12px;
+}
+
+.title-icon {
+  display: inline-flex;
+  color: var(--brass);
+}
+
+/* ==== کارتی دۆخ ==== */
+.status-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  margin-bottom: 22px;
+}
+
+.status-dot {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  color: var(--text-muted);
+}
+
+.status-card.open .status-dot { background: var(--open-bg); color: var(--open); }
+.status-card.closed .status-dot { background: var(--closed-bg); color: var(--closed); }
+
+.status-card.open { background: linear-gradient(135deg, var(--open-bg), var(--surface) 70%); border-color: rgba(111, 219, 154, 0.3); }
+.status-card.closed { background: linear-gradient(135deg, var(--closed-bg), var(--surface) 70%); border-color: rgba(240, 137, 124, 0.3); }
+
+.status-text h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.status-card.open .status-text h2 { color: var(--open); }
+.status-card.closed .status-text h2 { color: var(--closed); }
+
+.status-text p {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ==== خشتەی هەفتانە ==== */
+.schedule-block { margin-bottom: 26px; }
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 12px 10px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+}
+
+.schedule-table th {
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 800;
+  font-size: 12.5px;
+}
+
+.schedule-table tr:last-child td { border-bottom: none; }
+
+.schedule-table tr.today-row td {
+  background: var(--brass-bg);
+}
+
+.shift-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 800;
+}
+
+.shift-pill.morning { background: var(--brass-bg); color: var(--brass); }
+.shift-pill.afternoon { background: var(--teal-bg); color: var(--teal); }
+.shift-pill.off { background: var(--closed-bg); color: var(--closed); }
+
+.schedule-table td.off-time {
+  color: var(--text-muted);
+}
+
+/* ==== تێبینی ==== */
+.notices-block { margin-bottom: 26px; }
+
+.notices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notice-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-right: 3px solid var(--teal);
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+}
+
+.notice-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.notice-author {
+  font-weight: 800;
+  color: var(--text);
+  font-size: 13.5px;
+}
+
+.notice-date {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.notice-text {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.notices-empty {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 10px 2px;
+}
+
+/* ==== چات ==== */
+.chat-block { margin-bottom: 20px; }
+
+.chat-window {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  height: 260px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.chat-msg {
+  max-width: 82%;
+  padding: 9px 13px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+
+.chat-msg.bot {
+  background: var(--teal-bg);
+  color: var(--text);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-msg.user {
+  background: var(--brass);
+  color: var(--bg);
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+  font-weight: 700;
+}
+
+.chat-form {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-form input {
+  flex: 1;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.chat-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.chat-form input:focus {
+  outline: 2px solid var(--brass);
+  outline-offset: 1px;
+}
+
+.chat-form button {
+  padding: 0 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--brass);
+  color: var(--bg);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+.chat-form button:active { transform: translateY(1px); }
+
+footer {
+  text-align: center;
+  padding: 16px 14px calc(16px + env(safe-area-inset-bottom, 0px));
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="school-mark">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M12 3 L19 6 L19 12 C19 16.5 15.5 19.5 12 21 C8.5 19.5 5 16.5 5 12 L5 6 Z"/>
+        <path d="M12 8.5 L16.5 10.3 L12 12.1 L7.5 10.3 Z" fill="currentColor" stroke="none"/>
+        <path d="M9 11 L9 13.2 C9 14.1 10.3 14.8 12 14.8 C13.7 14.8 15 14.1 15 13.2 L15 11"/>
+        <line x1="12" y1="12.1" x2="12" y2="15.3"/>
+        <circle cx="12" cy="15.8" r="0.7" fill="currentColor" stroke="none"/>
+      </svg>
+    </div>
+    <div class="school-name">
+      <h1>قوتابخانەی سارای کوڕان</h1>
+      <p>پۆلی ٩ - ج</p>
+    </div>
+  </header>
+
+  <main>
+
+    <section id="status-card" class="status-card">
+      <span class="status-dot"></span>
+      <div class="status-text">
+        <h2 id="status-title">…</h2>
+        <p id="status-sub">…</p>
+      </div>
+    </section>
+
+    <section class="schedule-block">
+      <h3 class="section-title"><span class="title-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4M16 3v4"/></svg></span>خشتەی هەفتانە</h3>
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>ڕۆژ</th>
+            <th>گۆڕان</th>
+            <th>کاتژمێر</th>
+          </tr>
+        </thead>
+        <tbody id="schedule-body"></tbody>
+      </table>
+    </section>
+
+    <section class="notices-block">
+      <h3 class="section-title"><span class="title-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 0 0-4 4v3c0 2-1 3-2 4h12c-1-1-2-2-2-4V7a4 4 0 0 0-4-4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span>تێبینی</h3>
+      <div id="notices-list" class="notices-list"></div>
+    </section>
+
+    <section class="chat-block">
+      <h3 class="section-title"><span class="title-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v11H8l-4 4V4z"/></svg></span>پرسیارت هەیە؟</h3>
+      <div id="chat-window" class="chat-window">
+        <div class="chat-msg bot">سڵاو! دەتوانیت پرسیار لەبارەی کاتی دەوام و پشووکان بکەیت. بۆ نموونە: «سبەی دەوام هەیە؟» یان «هەینی چی؟»</div>
+      </div>
+      <form id="chat-form" class="chat-form">
+        <input id="chat-input" type="text" placeholder="پرسیارەکەت لێرە بنووسە..." autocomplete="off">
+        <button type="submit">ناردن</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>خشتەی دەوام بەپێی کاتی ئێستای مۆبایلەکەت نوێ دەبێتەوە</p>
+  </footer>
+
+<script>
+// ====== خشتەی دەوام ======
+// getDay(): 0=یەکشەممە, 1=دووشەممە, 2=سێشەممە, 3=چوارشەممە, 4=پێنجشەممە, 5=هەینی, 6=شەممە
+const SCHEDULE = [
+  { day: "یەکشەممە",  off: false, start: "12:30", end: "16:30", label: "نیوەڕۆیان" },
+  { day: "دووشەممە",  off: false, start: "12:30", end: "16:30", label: "نیوەڕۆیان" },
+  { day: "سێشەممە",   off: false, start: "12:30", end: "16:30", label: "نیوەڕۆیان" },
+  { day: "چوارشەممە", off: false, start: "08:00", end: "12:00", label: "بەیانیان" },
+  { day: "پێنجشەممە", off: false, start: "08:00", end: "12:00", label: "بەیانیان" },
+  { day: "هەینی",     off: true,  start: null,    end: null,    label: "پشوو" },
+  { day: "شەممە",     off: true,  start: null,    end: null,    label: "پشوو" },
+];
+
+// ====== خشتەی تاقیکردنەوەکان ======
+// هەر ڕیزێک تاقیکردنەوەیەکی جیایە. بابەت، بەروار و کاتژمێر بنووسە.
+const EXAM_SCHEDULE = [
+  // لێرە بابەت، بەروار و کاتی هەر تاقیکردنەوەیەک زیاد بکە
+];
+
+// ====== تێبینییەکان (لە گروپی ڤایبەر) ======
+// تازە بوونەوەی ئەم بەشە: تەنها پەیامی نوێ بنێرە بۆ چات، خۆی زیاد دەکرێت.
+const NOTICES_TEXT = ``;
+
+function parseNoticesText(raw) {
+  return raw
+    .split("---")
+    .map(block => block.trim())
+    .filter(block => block.length > 0)
+    .map(block => {
+      const notice = {};
+      block.split("\n").forEach(line => {
+        const i = line.indexOf(":");
+        if (i === -1) return;
+        const label = line.slice(0, i).trim();
+        const value = line.slice(i + 1).trim();
+        if (label === "مامۆستا") notice.author = value;
+        else if (label === "دەق") notice.text = value;
+        else if (label === "بەروار") notice.date = value;
+      });
+      return notice;
+    })
+    .filter(n => n.author && n.text);
+}
+
+const NOTICES = parseNoticesText(NOTICES_TEXT);
+
+function timeToMinutes(t) {
+  const [h, m] = t.split(":").map(Number);
+  return h * 60 + m;
+}
+
+// ====== ئایکۆنە بچووکەکان (SVG) ======
+const ICONS = {
+  check: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg>',
+  cross: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  sun: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  dome: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6"/><path d="M4.2 10.2l1.4 1.4M19.8 10.2l-1.4 1.4"/><path d="M1 18h22"/><path d="M6 18a6 6 0 0 1 12 0"/></svg>',
+  off: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>',
+};
+
+function formatTime12(t) {
+  const [h, m] = t.split(":").map(Number);
+  const period = h < 12 ? "بەیانی" : "ئێواره";
+  let h12 = h % 12;
+  if (h12 === 0) h12 = 12;
+  const mm = m.toString().padStart(2, "0");
+  return `${h12}:${mm} ${period}`;
+}
+
+function nowInfo() {
+  const now = new Date();
+  const dayIndex = now.getDay();
+  const minutesNow = now.getHours() * 60 + now.getMinutes();
+  return { now, dayIndex, minutesNow };
+}
+
+function isCurrentlyInSession() {
+  const { dayIndex, minutesNow } = nowInfo();
+  const today = SCHEDULE[dayIndex];
+  if (today.off) return { inSession: false, today };
+  const start = timeToMinutes(today.start);
+  const end = timeToMinutes(today.end);
+  return { inSession: minutesNow >= start && minutesNow <= end, today };
+}
+
+function renderStatus() {
+  const card = document.getElementById("status-card");
+  const dot = document.querySelector(".status-dot");
+  const title = document.getElementById("status-title");
+  const sub = document.getElementById("status-sub");
+  const { today, inSession } = isCurrentlyInSession();
+
+  card.classList.remove("open", "closed");
+
+  if (today.off) {
+    card.classList.add("closed");
+    dot.innerHTML = ICONS.cross;
+    title.textContent = "ئەمڕۆ پشوویە";
+    sub.textContent = `ئەمڕۆ (${today.day}) دەوام نیە.`;
+  } else if (inSession) {
+    card.classList.add("open");
+    dot.innerHTML = ICONS.check;
+    title.textContent = "ئێستا دەوام هەیە";
+    sub.textContent = `گۆڕانی ${today.label} — لە ${formatTime12(today.start)} تا ${formatTime12(today.end)}`;
+  } else {
+    card.classList.add("closed");
+    dot.innerHTML = ICONS.cross;
+    title.textContent = "ئێستا دەوام نیە";
+    sub.textContent = `دەوامی ئەمڕۆ (${today.label}) لە ${formatTime12(today.start)} دەست پێدەکات`;
+  }
+}
+
+function renderSchedule() {
+  const body = document.getElementById("schedule-body");
+  const { dayIndex } = nowInfo();
+  body.innerHTML = "";
+
+  SCHEDULE.forEach((row, i) => {
+    const tr = document.createElement("tr");
+    if (i === dayIndex) tr.classList.add("today-row");
+
+    const dayCell = document.createElement("td");
+    dayCell.textContent = row.day;
+
+    const typeCell = document.createElement("td");
+    const timeCell = document.createElement("td");
+
+    const pill = document.createElement("span");
+    pill.className = "shift-pill";
+
+    if (row.off) {
+      pill.classList.add("off");
+      pill.innerHTML = ICONS.off + "پشوو";
+      timeCell.textContent = "—";
+      timeCell.classList.add("off-time");
+    } else {
+      const isMorning = row.label === "بەیانیان";
+      pill.classList.add(isMorning ? "morning" : "afternoon");
+      pill.innerHTML = (isMorning ? ICONS.sun : ICONS.dome) + row.label;
+      timeCell.textContent = `${formatTime12(row.start)} - ${formatTime12(row.end)}`;
+    }
+    typeCell.appendChild(pill);
+
+    tr.appendChild(dayCell);
+    tr.appendChild(typeCell);
+    tr.appendChild(timeCell);
+    body.appendChild(tr);
+  });
+}
+
+function renderNotices() {
+  const list = document.getElementById("notices-list");
+  list.innerHTML = "";
+
+  if (NOTICES.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "notices-empty";
+    empty.textContent = "هیچ تێبینییەک نیە.";
+    list.appendChild(empty);
+    return;
+  }
+
+  NOTICES.forEach(notice => {
+    const card = document.createElement("div");
+    card.className = "notice-card";
+
+    const top = document.createElement("div");
+    top.className = "notice-top";
+
+    const author = document.createElement("span");
+    author.className = "notice-author";
+    author.textContent = "مامۆستا " + notice.author;
+    top.appendChild(author);
+
+    if (notice.date) {
+      const date = document.createElement("span");
+      date.className = "notice-date";
+      date.textContent = notice.date;
+      top.appendChild(date);
+    }
+
+    const text = document.createElement("p");
+    text.className = "notice-text";
+    text.textContent = notice.text;
+
+    card.appendChild(top);
+    card.appendChild(text);
+    list.appendChild(card);
+  });
+}
+
+// ====== چاتی سادە ======
+const DAY_KEYWORDS = {
+  "یەکشەم": 0, "دووشەم": 1, "سێشەم": 2,
+  "چوارشەم": 3, "پێنجشەم": 4, "هەینی": 5, "جومعە": 5, "شەم": 6
+};
+
+function findMentionedDay(text) {
+  for (const key in DAY_KEYWORDS) {
+    if (text.includes(key)) return DAY_KEYWORDS[key];
+  }
+  return null;
+}
+
+function describeDay(index) {
+  const row = SCHEDULE[index];
+  if (row.off) return `${row.day} پشوویە، دەوام نیە.`;
+  return `${row.day} گۆڕانی ${row.label} هەیە، لە ${formatTime12(row.start)} تا ${formatTime12(row.end)}.`;
+}
+
+function findExamBySubject(text) {
+  return EXAM_SCHEDULE.find(exam => text.includes(exam.subject));
+}
+
+function describeExam(exam) {
+  return `تاقیکردنەوەی ${exam.subject}: ${exam.date}، کاتژمێر ${exam.time}.`;
+}
+
+function examListText() {
+  if (EXAM_SCHEDULE.length === 0) {
+    return "هێشتا خشتەی تاقیکردنەوەکان زیاد نەکراوە.";
+  }
+  return "خشتەی تاقیکردنەوەکان:\n" +
+    EXAM_SCHEDULE.map(describeExam).join("\n");
+}
+
+function answerQuestion(rawText) {
+  const text = rawText.trim();
+  const { dayIndex } = nowInfo();
+
+  if (text.includes("دروست") || text.includes("بەرنامەنووس")) {
+    return "من لەلایەن ئیلیاس دروستکراوم.";
+  }
+
+  if (text.includes("تاقیکردنەوە") || text.includes("ئیمتحان")) {
+    const exam = findExamBySubject(text);
+    if (exam) return describeExam(exam);
+    return examListText();
+  }
+
+  if (text.includes("سبەی") || text.includes("سبەينێ")) {
+    const tomorrow = (dayIndex + 1) % 7;
+    return "سبەی " + describeDay(tomorrow);
+  }
+
+  if (text.includes("پێری سبەی")) {
+    const dayAfter = (dayIndex + 2) % 7;
+    return "پێری سبەی " + describeDay(dayAfter);
+  }
+
+  if (text.includes("ئەمڕۆ")) {
+    return "ئەمڕۆ " + describeDay(dayIndex);
+  }
+
+  const mentioned = findMentionedDay(text);
+  if (mentioned !== null) {
+    const row = SCHEDULE[mentioned];
+    const isYesNo = text.includes("دەوام") || text.includes("ئایا");
+    const prefix = isYesNo ? (row.off ? "نەخێر، " : "بەڵێ، ") : "";
+    return prefix + describeDay(mentioned);
+  }
+
+  if (text.includes("پشوو")) {
+    const offDays = SCHEDULE.filter(r => r.off).map(r => r.day).join(" و ");
+    return `ڕۆژانی پشوو: ${offDays}.`;
+  }
+
+  if (text.includes("دەوام") || text.includes("کات")) {
+    const { inSession } = isCurrentlyInSession();
+    return inSession
+      ? "بەڵێ، ئێستا دەوام هەیە."
+      : "نەخێر، ئێستا دەوام نیە.";
+  }
+
+  return "ببورە تێنەگەیشتم. دەتوانیت بپرسیت: «ئەمڕۆ دەوام هەیە؟»، «سبەی چۆنە؟»، یان ناوی ڕۆژێک بهێنیت وەک «هەینی».";
+}
+
+function addMessage(text, who) {
+  const win = document.getElementById("chat-window");
+  const div = document.createElement("div");
+  div.className = "chat-msg " + who;
+  div.textContent = text;
+  win.appendChild(div);
+  win.scrollTop = win.scrollHeight;
+}
+
+document.getElementById("chat-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const input = document.getElementById("chat-input");
+  const value = input.value.trim();
+  if (!value) return;
+  addMessage(value, "user");
+  const reply = answerQuestion(value);
+  setTimeout(() => addMessage(reply, "bot"), 250);
+  input.value = "";
+});
+
+renderStatus();
+renderSchedule();
+renderNotices();
+setInterval(() => {
+  renderStatus();
+  renderSchedule();
+}, 60 * 1000);
+</script>
+</body>
+</html>
